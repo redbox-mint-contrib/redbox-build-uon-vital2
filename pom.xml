@@ -3,17 +3,17 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.googlecode.redbox-mint</groupId>
     <artifactId>uon-redbox-vital2</artifactId>
-    <version>1.5-SNAPSHOT</version>
+    <version>1.4-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Newcastle - ReDBox - Vital with Fedora v2.x</name>
     <parent>
         <groupId>com.googlecode.redbox-mint</groupId>
         <artifactId>redbox</artifactId>
-        <version>1.5-SNAPSHOT</version>
+        <version>1.4</version>
     </parent>
     <properties>
         <!-- Used in build -->
-        <redbox.version>1.5-SNAPSHOT</redbox.version>
+        <redbox.version>1.4</redbox.version>
 
         <!-- Runtime values, will replace placeholders
              in config and control scripts -->
