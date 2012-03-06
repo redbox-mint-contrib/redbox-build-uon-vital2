@@ -2,10 +2,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.googlecode.redbox-mint</groupId>
-    <artifactId>redbox-vital2-curation-demo</artifactId>
+    <artifactId>uon-redbox-vital2</artifactId>
     <version>1.5-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>ReDBox - Vital Curation Demo - Fedora v2.x</name>
+    <name>Newcastle - ReDBox - Vital with Fedora v2.x</name>
     <parent>
         <groupId>com.googlecode.redbox-mint</groupId>
         <artifactId>redbox</artifactId>
@@ -28,8 +28,8 @@
         <dir.server>${project.home}/server</dir.server>
         <dir.solr>${project.home}/solr</dir.solr>
         <dir.storage>${project.home}/storage</dir.storage>
-        <smtp.host>localhost</smtp.host>
-        <admin.email>admin@localhost</admin.email>
+        <smtp.host>smtp.newcastle.edu.au</smtp.host>
+        <admin.email>dave.huthnance@newcastle.edu.au</admin.email>
         <!-- Control scripts try to auto-detect proxy. Use this value if you
              want Java to specifically exclude certain hosts from proxying. -->
         <non.proxy.hosts>localhost</non.proxy.hosts>
@@ -73,6 +73,33 @@
         </dependency>
     </dependencies>
     <profiles>
+        <profile>
+            <id>novadev1</id>
+            <activation>
+                <property>
+                    <name>env.HOSTNAME</name>
+                    <value>novadev1</value>
+                </property>
+            </activation>
+            <properties>
+                <server.url.base>http://novadev1.newcastle.usq.edu.au/redbox/</server.url.base>
+                <mint.proxy.server>http://novadev1.newcastle.edu.au</mint.proxy.server>
+            </properties>
+        </profile>
+        <profile>
+            <id>novadev2</id>
+            <activation>
+                <property>
+                    <name>env.HOSTNAME</name>
+                    <value>novadev2</value>
+                </property>
+            </activation>
+            <properties>
+                <server.url.base>http://novadev2.newcastle.usq.edu.au/redbox/</server.url.base>
+                <mint.proxy.server>http://novadev2.newcastle.edu.au</mint.proxy.server>
+            </properties>
+        </profile>
+
         <profile>
             <id>build-package</id>
             <properties>

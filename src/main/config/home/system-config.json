@@ -2,9 +2,9 @@
     "version": "1.0.5.3",
     "redbox.version.string": "${redbox.version}",
     "redbox.identity": {
-        "institution": "University of Examples",
-        "RIF-CS Group": "The University of Examples, Australia",
-        "internalGrantString": "urn:uoe:internal"
+        "institution": "University of Newcastle",
+        "RIF-CS Group": "The University of Newcastle, Australia",
+        "internalGrantString": "urn:uon:internal"
     },
     "configured": true,
     "urlBase": "${server.url.base}",
