@@ -324,7 +324,7 @@
     </repository>
   </repositories>
   <scm>
-    <scmUrl>https://github.com/redbox-mint-contrib/redbox-build-uon-vital2</scmUrl>
+    <url>https://github.com/redbox-mint-contrib/redbox-build-uon-vital2</url>
     <developerConnection>scm:git:https://github.com/redbox-mint-contrib/redbox-build-uon-vital2.git</developerConnection>
   </scm>
 </project>
