@@ -1,4 +1,7 @@
 {
+	"presentation-settings": {
+       "hide-funding-body-label" : "true"
+     },
     "harvester": {
         "type": "workflow-harvester",
         "workflow-harvester": {
