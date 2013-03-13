@@ -1,6 +1,7 @@
 {
-	"presentation-settings": {
+    "presentation-settings": {
        "hide-funding-body-label" : "true"
+       "use-embargoes" : "true",
      },
     "harvester": {
         "type": "workflow-harvester",
