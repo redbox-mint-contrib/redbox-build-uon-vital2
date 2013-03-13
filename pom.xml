@@ -2,20 +2,23 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.googlecode.redbox-mint</groupId>
-  <artifactId>uon-redbox-vital2</artifactId>
-  <version>1.5.2-SNAPSHOT</version>
+  <artifactId>redbox-vital2-curation-demo</artifactId>
+  <version>1.6-RC01-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>Newcastle - ReDBox - Vital with Fedora v2.x</name>
+  <name>ReDBox - Vital Curation Demo - Fedora v2.x</name>
   <parent>
     <groupId>com.googlecode.redbox-mint</groupId>
     <artifactId>redbox</artifactId>
-    <version>1.5.2</version>
+    <version>1.6-RC01</version>
   </parent>
   <properties>
     <!-- Used in build -->
-    <redbox.version>1.5.2</redbox.version>
+    <redbox.version>1.6-RC01</redbox.version>
+    <package.finalname>${project.build.finalName}</package.finalname>
     <!-- Runtime values, will replace placeholders
              in config and control scripts -->
+    <app.location.windows>${project.home}</app.location.windows>
+    <app.location.linux>${project.home}</app.location.linux>
     <server.port>9000</server.port>
     <amq.port>9101</amq.port>
     <amq.stomp.port>9102</amq.stomp.port>
@@ -27,8 +30,8 @@
     <dir.server>${project.home}/server</dir.server>
     <dir.solr>${project.home}/solr</dir.solr>
     <dir.storage>${project.home}/storage</dir.storage>
-    <smtp.host>smtp.newcastle.edu.au</smtp.host>
-    <admin.email>dave.huthnance@newcastle.edu.au</admin.email>
+    <smtp.host>localhost</smtp.host>
+    <admin.email>admin@localhost</admin.email>
     <!-- Control scripts try to auto-detect proxy. Use this value if you
              want Java to specifically exclude certain hosts from proxying. -->
     <non.proxy.hosts>localhost</non.proxy.hosts>
@@ -73,35 +76,11 @@
   </dependencies>
   <profiles>
     <profile>
-      <id>novadev1</id>
-      <activation>
-        <property>
-          <name>env.HOSTNAME</name>
-          <value>novadev1</value>
-        </property>
-      </activation>
-      <properties>
-        <server.url.base>http://novadev1.newcastle.usq.edu.au/redbox/</server.url.base>
-        <mint.proxy.server>http://novadev1.newcastle.edu.au</mint.proxy.server>
-      </properties>
-    </profile>
-    <profile>
-      <id>novadev2</id>
-      <activation>
-        <property>
-          <name>env.HOSTNAME</name>
-          <value>novadev2</value>
-        </property>
-      </activation>
-      <properties>
-        <server.url.base>http://novadev2.newcastle.usq.edu.au/redbox/</server.url.base>
-        <mint.proxy.server>http://novadev2.newcastle.edu.au</mint.proxy.server>
-      </properties>
-    </profile>
-    <profile>
       <id>build-package</id>
       <properties>
         <server.url.base>http://localhost:${server.port}/redbox/</server.url.base>
+         <app.location.windows>c:/tf2/redbox</app.location.windows>
+    	<app.location.linux>/opt/redbox</app.location.linux>
       </properties>
       <!-- Used for creating an install - omits local build system settings -->
       <build>
@@ -324,7 +303,20 @@
     </repository>
   </repositories>
   <scm>
-    <url>https://github.com/redbox-mint-contrib/redbox-build-uon-vital2</url>
-    <developerConnection>scm:git:https://github.com/redbox-mint-contrib/redbox-build-uon-vital2.git</developerConnection>
+    <url>https://github.com/redbox-mint/redbox-build-dev-vital2</url>
+    <developerConnection>scm:git:https://github.com/redbox-mint/redbox-build-dev-vital2</developerConnection>
+    <tag>HEAD</tag>
   </scm>
+  <distributionManagement>
+		<snapshotRepository>
+			<id>redbox-nexus-snapshots</id>
+			<name>Redbox Nexus Snapshots</name>
+			<url>http://dev.redboxresearchdata.com.au/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+		<repository>
+			<id>redbox-nexus-releases</id>
+			<name>Redbox Nexus Releases</name>
+			<url>http://dev.redboxresearchdata.com.au/nexus/content/repositories/releases/</url>
+		</repository>
+	</distributionManagement>
 </project>
