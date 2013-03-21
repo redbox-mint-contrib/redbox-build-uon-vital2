@@ -9,7 +9,7 @@
   <parent>
     <groupId>com.googlecode.redbox-mint</groupId>
     <artifactId>redbox</artifactId>
-    <version>1.6-RC02</version>
+    <version>1.6-RC02-SNAPSHOT</version>
   </parent>
   <properties>
     <!-- Used in build -->
