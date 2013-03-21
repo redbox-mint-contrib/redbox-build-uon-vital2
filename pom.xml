@@ -3,17 +3,17 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.googlecode.redbox-mint</groupId>
   <artifactId>redbox-vital2-curation-demo</artifactId>
-  <version>1.6-RC01-SNAPSHOT</version>
+  <version>1.6-RC02-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>ReDBox - Vital Curation Demo - Fedora v2.x</name>
   <parent>
     <groupId>com.googlecode.redbox-mint</groupId>
     <artifactId>redbox</artifactId>
-    <version>1.6-RC01</version>
+    <version>1.6-RC02</version>
   </parent>
   <properties>
     <!-- Used in build -->
-    <redbox.version>1.6-RC01</redbox.version>
+    <redbox.version>1.6-RC02</redbox.version>
     <package.finalname>${project.build.finalName}</package.finalname>
     <!-- Runtime values, will replace placeholders
              in config and control scripts -->
