@@ -129,8 +129,8 @@
     "curation": {
         "curationEmailAddress": "${admin.email}",
         "curationRequiresConfirmation": false,
-        "pidProperty": "localPid",
-        "pidType": "local",
+        "pidProperty": "vitalHandle",
+        "pidType": "handle",
         "mintBroker": "${mint.amq.broker}",
         "relations": {
             "dc:relation.vivo:Dataset.0.dc:identifier": {
@@ -389,6 +389,16 @@
             "id": "jsonVelocity",
             "sourcePayload": ".tfpackage",
             "templatesPath": "${fascinator.home}/templates"
+        },
+        "jsonVelocityPDF": {
+            "id": "jsonVelocityPDF",
+            "sourcePayload": ".tfpackage",
+            "templatesPath": "${fascinator.home}/pdf-templates",
+            "checkForTFMETAProperty": "true",
+            "TFMETAPropertyName": "generatePDF",
+            "TFMETAPropertyValue": "true",
+            "clearPropertyOnTransform": "true",
+            "versioning": "true"
         }
     },
     "uploader": {
@@ -428,7 +438,11 @@
         "sessionTimeout": "60",
         "skins": {
             "default": "default",
-            "order": [ "local", "redbox" ]
+            "order": [
+                "local",
+                "dashboard",
+                "redbox"
+            ]
         },
         "caching": {
             "caches": {
@@ -499,6 +513,14 @@
             },
             "dataset": {
                 "jsonconfig": "dataset.json",
+                "packages-in-package": false
+            },
+            "dmpt": {
+                "jsonconfig": "dmpt.json",
+                "packages-in-package": false
+            },
+            "simple": {
+                "jsonconfig": "simple.json",
                 "packages-in-package": false
             }
         },
@@ -582,6 +604,108 @@
             "rif": "${fascinator.home}/alerts/config/rifXmlMap.json"
         }
     },
+    "new-alerts": {
+        "alertSet": [
+            {
+                "name": "Default alert",
+                "path": "${fascinator.home}/new-alerts",
+                "harvestConfig": "${fascinator.home}/harvest/workflows/dataset.json",
+                "handlers": {
+                    "csv": "CSVAlertHandler",
+                    "tab": "CSVAlertHandler",
+                    "com": "CSVAlertHandler",
+                    "csm": "CSVAlertHandler",
+                    "xml": "XMLAlertHandler",
+                    "rif": "XMLAlertHandler"
+                }, 
+                "baseline": {
+                    "workflow_source": "Default Alert"
+                },
+                "timestampFields": ["redbox:submissionProcess.dc:date"],
+                "CSVAlertHandlerParams": {
+                    "configMap": {
+                        "csv": {
+                            "Dialect": {
+                                "skipinitialspace": true
+                            },
+                            "fieldMap": {
+                                    "title": ["title","redbox:submissionProcess.dc:title"],
+                                    "description": ["description", "redbox:submissionProcess.dc:description"],
+                                    "name": "redbox:submissionProcess.locrel:prc.foaf:Person.foaf:name",
+                                    "phone": "redbox:submissionProcess.locrel:prc.foaf:Person.foaf:phone",
+                                    "email": "redbox:submissionProcess.locrel:prc.foaf:Person.foaf:mbox",
+                                    "note": "redbox:submissionProcess.skos:note"
+                            }
+                        },
+                        "tab": {
+                            "Dialect": {
+                                "delimiter": "\t",
+                                "skipinitialspace": true
+                            },
+                            "fieldMap": {
+                                    "title": ["title","redbox:submissionProcess.dc:title"],
+                                    "description": ["description", "redbox:submissionProcess.dc:description"],
+                                    "name": "redbox:submissionProcess.locrel:prc.foaf:Person.foaf:name",
+                                    "phone": "redbox:submissionProcess.locrel:prc.foaf:Person.foaf:phone",
+                                    "email": "redbox:submissionProcess.locrel:prc.foaf:Person.foaf:mbox",
+                                    "note": "redbox:submissionProcess.skos:note"
+                            }
+                        },
+                        "com": {
+                            "Dialect": {
+                                "delimiter": "|",
+                                "skipinitialspace": true
+                            },
+                            "fieldMap": {
+                                    "title": ["title","redbox:submissionProcess.dc:title"],
+                                    "description": ["description", "redbox:submissionProcess.dc:description"],
+                                    "name": "redbox:submissionProcess.locrel:prc.foaf:Person.foaf:name",
+                                    "phone": "redbox:submissionProcess.locrel:prc.foaf:Person.foaf:phone",
+                                    "email": "redbox:submissionProcess.locrel:prc.foaf:Person.foaf:mbox",
+                                    "note": "redbox:submissionProcess.skos:note"
+                            }
+                        },
+                        "csm": {
+                            "Dialect": {
+                                "delimiter": "|",
+                                "skipinitialspace": true
+                            },
+                            "fieldMap": {
+                                    "title": ["title","redbox:submissionProcess.dc:title"],
+                                    "description": ["description", "redbox:submissionProcess.dc:description"],
+                                    "name": "redbox:submissionProcess.locrel:prc.foaf:Person.foaf:name",
+                                    "phone": "redbox:submissionProcess.locrel:prc.foaf:Person.foaf:phone",
+                                    "email": "redbox:submissionProcess.locrel:prc.foaf:Person.foaf:mbox",
+                                    "keywords": "dc:subject.vivo:keyword.0.rdf:PlainLiteral",
+                                    "note": "redbox:submissionProcess.skos:note"
+                            },
+                            "multiValue": {
+                                "fields": ["keywords"],
+                                "fieldDelimiter": ";"
+                            }
+                        }
+                    }
+                },
+                "XMLAlertHandlerParams": {
+                    "configMap": {
+                        "xml": {
+                            "xmlMap": "${fascinator.home}/alerts/config/basicXmlMap.json"
+                        },
+                        "rif": {
+                            "xmlMap": "${fascinator.home}/alerts/config/rifXmlMap.json"
+                        }
+                    }
+                }
+            }
+        ],
+        "baseline": {
+            "viewId": "default",
+            "packageType": "dataset",
+            "redbox:formVersion": "1.5.2",
+            "redbox:newForm": "true",
+            "redbox:submissionProcess.redbox:submitted": "true"
+        }
+    },
     "watcher": {
         "path": "${watcher.home}"
     },
@@ -657,7 +781,7 @@
                   },
                   {
                     "name":"rb-collection-index",
-                    "label":"Records in ReDBox - (Collection type) Catalouge or Index",
+                    "label":"Records in ReDBox - (Collection type) Catalogue or Index",
                     "solr_field":"dc_type",
                     "solr_field_value":"catalogueOrIndex"                
                   },
@@ -689,7 +813,7 @@
                     "name":"rb-workflow-metadata",
                     "label":"Records in ReDBox - (workflow) Metadata Review",
                     "solr_field":"workflow_step",
-                    "solr_field_value":"metadata"                
+                    "solr_field_value":"metadata-review"                
                   },
                   {                  
                     "name":"rb-workflow-investigation",
@@ -707,7 +831,7 @@
               }, 
               {
                 "name":"mint-all",
-                "url":"http://dev.redboxresearchdata.com.au/ci-mint/default/api/query.script?callType=mint-stats&",
+                "url":"${mint.proxy.url}/default/api/query.script?callType=mint-stats&",
                 "fields":[
                   {
                     "name":"mint-total",                  
@@ -755,8 +879,8 @@
               "final-review":"Final Review",
               "live":"Live",
               "retired":"Retired"
-            },
-          }
+            }
+          },
           "records-by-stage-2": {
               "className": "com.googlecode.fascinator.portal.report.type.RecordsByStage2ChartHandler",
               "csv-field-label":{
@@ -787,7 +911,7 @@
                 "8":"Sep",
                 "9":"Oct",
                 "10":"Nov",
-                "11":"Dec",
+                "11":"Dec"
               }
           },
           "records-by-month-2": {
@@ -797,23 +921,128 @@
                 "collection":"Collection",
                 "activity":"Activity",
                 "service":"Service"
-              },
+              }
           }           
     },
     "redbox-reports":{
     					"enabled":"true",
     				 	"csv-output-fields": [
-     					{   "field-name": "dc_title"
+     					  {   "field-name": "dc_title",
             				"label": "Title"
        	 				},
-       	 				{   "field-name": "dc:type.skos:prefLabel"
-            				"label": "Type"
+       	 				{   "field-name": "dc_type",
+            				"label": "Record/Collection Type"
        	 				},
-       	 				{   "field-name": "workflow_step_label"
+       	 				{   "field-name": "workflow_step_label",
             				"label": "Workflow Step"
+       	 				}, 
+       	 				{   "field-name": "dc:created",
+            				"label": "Date Record Created"
        	 				},
-       	 				{   "field-name": "creatorfullname"
+       	 				{   "field-name": "dc:modified",
+            				"label": "Date Record Modified"
+       	 				},
+       	 				{   "field-name": "dc:language",
+            				"label": "Language"
+       	 				},
+       	 				{   "field-name": "reporting_dc:coverage.vivo:DateTimeInterval",
+            				"label": "Date Coverage"
+       	 				},
+       	 				{   "field-name": "dc:coverage.redbox:timePeriod",
+            				"label": "Time Period"
+       	 				},       	 				
+       	 				{   "field-name": "reporting_dc:coverage.vivo:GeographicLocation.rdf:PlainLiteral",
+            				"label": "Geospatial Location"
+       	 				},
+       	 				{   "field-name": "dc:description",
+            				"label": "Description"
+       	 				},
+       	 				{   "field-name": "reporting_dc:relation.swrc:Publication.dc:title",
+            				"label": "Related Publication"
+       	 				},
+       	 				{   "field-name": "reporting_dc:relation.bibo:Website.dc:title",
+            				"label": "Related Website"
+       	 				},
+       	 				{   "field-name": "reporting_dc:relation.vivo:Dataset.dc:title",
+            				"label": "Related Data"
+       	 				},
+       	 				{   "field-name": "reporting_dc:creator.foaf:Person",
             				"label": "Creators"
+       	 				},
+                {   "field-name": "reporting_locrel:prc.foaf:Person",
+            				"label": "Primary Contact"
+       	 				},
+                {   "field-name": "reporting_swrc:supervisor.foaf:Person",
+            				"label": "Supervisor"
+       	 				},
+                {   "field-name": "reporting_dc:contributor.locrel:clb.foaf:Agent",
+            				"label": "Collaborators"
+       	 				},
+                {   "field-name": "reporting_dc:subject.anzsrc:for.skos:prefLabel",
+            				"label": "Fields of Research"
+       	 				},
+                {   "field-name": "reporting_dc:subject.anzsrc:seo.skos:prefLabel",
+            				"label": "Socio-Economic Objective"
+       	 				},
+                {   "field-name": "keywords",
+            				"label": "Keywords"
+       	 				},
+                {   "field-name": "dc:subject.anzsrc:toa.skos:prefLabel",
+            				"label": "Type of Research Activity"
+       	 				},
+                {   "field-name": "dc:accessRights.skos:prefLabel",
+            				"label": "Access Rights"
+       	 				},
+                {   "field-name": "dc:license.skos:prefLabel",
+            				"label": "Licence"
+       	 				},
+                {   "field-name": "reporting_bibo:Website.dc:identifier",
+            				"label": "Location (URL)"
+       	 				},
+                {   "field-name": "vivo:Location.vivo:GeographicLocation.gn:name",
+            				"label": "Location"
+       	 				},
+                {   "field-name": "redbox:retentionPeriod",
+            				"label": "Retention Period"
+       	 				},
+                {   "field-name": "dc:extent",
+            				"label": "Extent or Quantity"
+       	 				},
+                {   "field-name": "redbox:disposalDate",
+            				"label": "Disposal Date"
+       	 				},
+                {   "field-name": "reporting_locrel:own.foaf:Agent.foaf:name",
+            				"label": "Data Owner (IP)"
+       	 				},
+                {   "field-name": "locrel:dtm.foaf:Agent.foaf:name",
+            				"label": "Data Custodian"
+       	 				},
+                {   "field-name": "foaf:Organization.skos:prefLabel",
+            				"label": "Data Affiliation"
+       	 				},
+                {   "field-name": "reporting_foaf:fundedBy.foaf:Agent.skos:prefLabel",
+            				"label": "Funding Body/s"
+       	 				},
+                {   "field-name": "reporting_foaf:fundedBy.vivo:Grant.redbox:grantNumber",
+            				"label": "Grant Numbers"
+       	 				},
+                {   "field-name": "swrc:ResearchProject.dc:title",
+            				"label": "Project Title"
+       	 				},
+                {   "field-name": "locrel:dpt.foaf:Person.foaf:name",
+            				"label": "Depositor"
+       	 				},
+                {   "field-name": "dc:SizeOrDuration",
+            				"label": "Data size"
+       	 				},
+                {   "field-name": "dc:Policy",
+            				"label": "Institutional Data Management Policy"
+       	 				},
+                {   "field-name": "redbox:ManagementPlan.skos:note",
+            				"label": "Data Management Plan"
+       	 				},
+                {   "field-name": "reporting_skos:note.dc:description",
+            				"label": "Notes"
        	 				}
        	 				
     				]}
