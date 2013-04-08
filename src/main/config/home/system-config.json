@@ -701,7 +701,7 @@
         "baseline": {
             "viewId": "default",
             "packageType": "dataset",
-            "redbox:formVersion": "1.5.2",
+            "redbox:formVersion": "1.6",
             "redbox:newForm": "true",
             "redbox:submissionProcess.redbox:submitted": "true"
         }
